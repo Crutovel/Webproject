@@ -17,16 +17,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyDBAuthenticationService implements UserDetailsService {
 
-    @Autowired
-    private AccountDAO accountDAO;
+    private final AccountDAO accountDAO;
 
+    @Autowired
+    public MyDBAuthenticationService(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountDAO.findAccount(username);
         System.out.println("Account= " + account);
 
         if (account == null) {
-            throw new UsernameNotFoundException("User " //
+            throw new UsernameNotFoundException("User "
                     + username + " was not found in the database");
         }
 
@@ -45,8 +48,8 @@ public class MyDBAuthenticationService implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
 
-        UserDetails userDetails = (UserDetails) new User(account.getUserName(), //
-                account.getPassword(), enabled, accountNonExpired, //
+        UserDetails userDetails = new User(account.getUserName(),
+                account.getPassword(), enabled, accountNonExpired,
                 credentialsNonExpired, accountNonLocked, grantList);
 
         return userDetails;

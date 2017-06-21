@@ -2,6 +2,7 @@ package com.softserve.edu.webproject.config;
 
 import com.softserve.edu.webproject.authentication.MyDBAuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,18 +11,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 // @EnableWebSecurity = @EnableWebMVCSecurity + Extra features
+@ComponentScan( basePackages = "com.softserve.edu.webproject.authentication" )
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    final private MyDBAuthenticationService myDBauthenticationService;
+
     @Autowired
-    MyDBAuthenticationService myDBAauthenticationService;
+    public WebSecurityConfig(MyDBAuthenticationService myDBauthenticationService) {
+        this.myDBauthenticationService = myDBauthenticationService;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
         // For User in database.
-        auth.userDetailsService(myDBAauthenticationService);
-
+        auth.userDetailsService(myDBauthenticationService);
     }
 
     @Override
@@ -31,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // The pages requires login as EMPLOYEE or MANAGER.
         // If no login, it will redirect to /login page.
-        http.authorizeRequests().antMatchers("/orderList","/order", "/accountInfo")//
+        http.authorizeRequests().antMatchers("/orderList", "/order", "/accountInfo")
                 .access("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_MANAGER')");
 
         // For MANAGER only.
@@ -43,13 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Config for Login Form
-        http.authorizeRequests().and().formLogin()//
+        http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
-                .defaultSuccessUrl("/accountInfo")//
-                .failureUrl("/login?error=true")//
-                .usernameParameter("userName")//
+                .loginPage("/login")
+                .defaultSuccessUrl("/accountInfo")
+                .failureUrl("/login?error=true")
+                .usernameParameter("userName")
                 .passwordParameter("password")
                 // Config for Logout Page
                 // (Go to home page).

@@ -3,7 +3,5 @@
 
 
 <div class="footer-container">
-
-
-
+    Leo 2017
 </div>

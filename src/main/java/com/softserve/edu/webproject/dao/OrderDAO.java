@@ -9,13 +9,12 @@ import com.softserve.edu.webproject.model.PaginationResult;
 
 public interface OrderDAO {
 
-    public void saveOrder(CartInfo cartInfo);
+    void saveOrder(CartInfo cartInfo);
 
-    public PaginationResult<OrderInfo> listOrderInfo(int page,
-                                                     int maxResult, int maxNavigationPage);
+    PaginationResult<OrderInfo> listOrderInfo(int page, int maxResult, int maxNavigationPage);
 
-    public OrderInfo getOrderInfo(String orderId);
+    OrderInfo getOrderInfo(String orderId);
 
-    public List<OrderDetailInfo> listOrderDetailInfos(String orderId);
+    List<OrderDetailInfo> listOrderDetailInfos(String orderId);
 
 }

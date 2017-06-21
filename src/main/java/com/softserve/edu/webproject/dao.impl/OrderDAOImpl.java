@@ -21,9 +21,10 @@ import com.softserve.edu.webproject.model.OrderDetailInfo;
 import com.softserve.edu.webproject.model.OrderInfo;
 import com.softserve.edu.webproject.model.PaginationResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-//Transactional for Hibernate
+@Repository
 @Transactional
 public class OrderDAOImpl implements OrderDAO {
 

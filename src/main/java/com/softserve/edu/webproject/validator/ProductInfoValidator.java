@@ -16,8 +16,6 @@ public class ProductInfoValidator implements Validator {
     @Autowired
     private ProductDAO productDAO;
 
-    // This Validator support ProductInfo class.
-
     public boolean supports(Class<?> clazz) {
         return clazz == ProductInfo.class;
     }
@@ -34,7 +32,7 @@ public class ProductInfoValidator implements Validator {
         if (code != null && code.length() > 0) {
             if (code.matches("\\s+")) {
                 errors.rejectValue("code", "Pattern.productForm.code");
-            } else if(productInfo.isNewProduct()) {
+            } else if (productInfo.isNewProduct()) {
                 Product product = productDAO.findProduct(code);
                 if (product != null) {
                     errors.rejectValue("code", "Duplicate.productForm.code");
@@ -42,5 +40,4 @@ public class ProductInfoValidator implements Validator {
             }
         }
     }
-
 }

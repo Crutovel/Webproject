@@ -30,9 +30,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-// Enable Hibernate Transaction.
 @Transactional
-// Need to use RedirectAttributes
 @EnableWebMvc
 public class AdminController {
 
@@ -64,14 +62,12 @@ public class AdminController {
         }
     }
 
-    // GET: Show Login Page
-    @RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public String login(Model model) {
-
         return "login";
     }
 
-    @RequestMapping(value = { "/accountInfo" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/accountInfo"}, method = RequestMethod.GET)
     public String accountInfo(Model model) {
 
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -83,13 +79,14 @@ public class AdminController {
         return "accountInfo";
     }
 
-    @RequestMapping(value = { "/orderList" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/orderList"}, method = RequestMethod.GET)
     public String orderList(Model model, //
                             @RequestParam(value = "page", defaultValue = "1") String pageStr) {
         int page = 1;
         try {
             page = Integer.parseInt(pageStr);
         } catch (Exception e) {
+            System.err.println("Page parsing to Integer problem");
         }
         final int MAX_RESULT = 5;
         final int MAX_NAVIGATION_PAGE = 10;
@@ -101,8 +98,7 @@ public class AdminController {
         return "orderList";
     }
 
-    // GET: Show product.
-    @RequestMapping(value = { "/product" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/product"}, method = RequestMethod.GET)
     public String product(Model model, @RequestParam(value = "code", defaultValue = "") String code) {
         ProductInfo productInfo = null;
 
@@ -117,10 +113,8 @@ public class AdminController {
         return "product";
     }
 
-    // POST: Save product
-    @RequestMapping(value = { "/product" }, method = RequestMethod.POST)
-    // Avoid UnexpectedRollbackException (See more explanations)
-    @Transactional(propagation = Propagation.NEVER)
+    @RequestMapping(value = {"/product"}, method = RequestMethod.POST)
+    @Transactional(propagation = Propagation.NEVER) //Propagation.NEVER?
     public String productSave(Model model, //
                               @ModelAttribute("productForm") @Validated ProductInfo productInfo, //
                               BindingResult result, //
@@ -132,17 +126,15 @@ public class AdminController {
         try {
             productDAO.save(productInfo);
         } catch (Exception e) {
-            // Need: Propagation.NEVER?
             String message = e.getMessage();
             model.addAttribute("message", message);
-            // Show product form.
             return "product";
 
         }
         return "redirect:/productList";
     }
 
-    @RequestMapping(value = { "/order" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/order"}, method = RequestMethod.GET)
     public String orderView(Model model, @RequestParam("orderId") String orderId) {
         OrderInfo orderInfo = null;
         if (orderId != null) {

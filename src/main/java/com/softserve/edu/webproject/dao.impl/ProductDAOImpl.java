@@ -12,9 +12,10 @@ import com.softserve.edu.webproject.entity.Product;
 import com.softserve.edu.webproject.model.PaginationResult;
 import com.softserve.edu.webproject.model.ProductInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-// Transactional for Hibernate
+@Repository
 @Transactional
 public class ProductDAOImpl implements ProductDAO {
 
@@ -29,7 +30,6 @@ public class ProductDAOImpl implements ProductDAO {
         return (Product) crit.uniqueResult();
     }
 
-
     public ProductInfo findProductInfo(String code) {
         Product product = this.findProduct(code);
         if (product == null) {
@@ -37,7 +37,6 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return new ProductInfo(product.getCode(), product.getName(), product.getPrice());
     }
-
 
     public void save(ProductInfo productInfo) {
         String code = productInfo.getCode();
@@ -66,8 +65,7 @@ public class ProductDAOImpl implements ProductDAO {
         if (isNew) {
             this.sessionFactory.getCurrentSession().persist(product);
         }
-        // If error in DB, Exceptions will be thrown out immediately
-        // Nếu có lỗi tại DB, ngoại lệ sẽ ném ra ngay lập tức
+
         this.sessionFactory.getCurrentSession().flush();
     }
 

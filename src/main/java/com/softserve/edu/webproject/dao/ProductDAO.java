@@ -6,19 +6,15 @@ import com.softserve.edu.webproject.model.ProductInfo;
 
 public interface ProductDAO {
 
+    Product findProduct(String code);
+
+    ProductInfo findProductInfo(String code);
 
 
-    public Product findProduct(String code);
+    PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage);
 
-    public ProductInfo findProductInfo(String code) ;
+    PaginationResult<ProductInfo> queryProducts(int page, int maxResult, int maxNavigationPage, String likeName);
 
-
-    public PaginationResult<ProductInfo> queryProducts(int page,
-                                                       int maxResult, int maxNavigationPage  );
-
-    public PaginationResult<ProductInfo> queryProducts(int page, int maxResult,
-                                                       int maxNavigationPage, String likeName);
-
-    public void save(ProductInfo productInfo);
+    void save(ProductInfo productInfo);
 
 }

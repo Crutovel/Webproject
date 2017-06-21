@@ -4,25 +4,19 @@
                      http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.o7planning</groupId>
-    <artifactId>SpringMVCAnnotationShoppingCart</artifactId>
+    <groupId>com.softserve.edu</groupId>
+    <artifactId>vaccamoo</artifactId>
     <packaging>war</packaging>
     <version>1.0.0</version>
-    <name>SpringMVCAnnotationShoppingCart Maven Webapp</name>
+    <name>Vaccamoo</name>
     <url>http://maven.apache.org</url>
 
-
     <properties>
-        <java-version>1.7</java-version>
+        <spring.version>4.3.9.RELEASE</spring.version>
+        <spring.security.version>4.2.3.RELEASE</spring.security.version>
+        <java.version>1.7</java.version>
+        <hibernate.version>5.2.10.Final</hibernate.version>
     </properties>
-
-    <repositories>
-        <!-- Repository for ORACLE JDBC Driver -->
-        <repository>
-            <id>codelds</id>
-            <url>https://code.lds.org/nexus/content/groups/main-repo</url>
-        </repository>
-    </repositories>
 
     <dependencies>
 
@@ -42,14 +36,13 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jstl for jsp page -->
+        <!-- JSTL for jsp page -->
         <!-- http://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-
 
         <!-- JSP API -->
         <!-- http://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
@@ -73,28 +66,28 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.2.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.springframework/spring-web -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.2.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.2.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.springframework/spring-orm -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>4.2.5.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- Spring Security Artifacts - START -->
@@ -102,21 +95,21 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${spring.security.version}</version>
         </dependency>
 
         <!-- Spring Security Artifacts - END -->
@@ -126,24 +119,22 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.2.10.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <!-- http://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.2.10.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
-
 
         <!-- http://mvnrepository.com/artifact/org.hibernate/hibernate-c3p0 -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-c3p0</artifactId>
-            <version>5.2.10.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
-
 
         <!-- MySQL JDBC driver -->
         <!-- http://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -163,7 +154,6 @@
 
     </dependencies>
 
-
     <build>
         <finalName>SpringMVCAnnotationShoppingCart</finalName>
         <plugins>
@@ -174,12 +164,8 @@
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
-                <!-- Config: contextPath and Port (Default - /SpringMVCAnnotationShoppingCart
-                    : 8080) -->
-                <!-- <configuration> <path>/</path> <port>8899</port> </configuration> -->
             </plugin>
         </plugins>
     </build>
-
 
 </project>

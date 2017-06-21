@@ -4,7 +4,6 @@ import com.softserve.edu.webproject.entity.Account;
 
 public interface AccountDAO {
 
-
-    public Account findAccount(String userName );
+     Account findAccount(String userName );
 
 }

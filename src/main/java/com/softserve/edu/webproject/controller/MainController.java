@@ -31,9 +31,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-// Enable Hibernate Transaction.
 @Transactional
-// Need to use RedirectAttributes
 @EnableWebMvc
 public class MainController {
 
@@ -65,7 +63,6 @@ public class MainController {
         else if (target.getClass() == CustomerInfo.class) {
             dataBinder.setValidator(customerInfoValidator);
         }
-
     }
 
     @RequestMapping("/403")
@@ -78,9 +75,7 @@ public class MainController {
         return "index";
     }
 
-    // Product List page.
-    // Danh sách sản phẩm.
-    @RequestMapping({ "/productList" })
+    @RequestMapping({"/productList"})
     public String listProductHandler(Model model, //
                                      @RequestParam(value = "name", defaultValue = "") String likeName,
                                      @RequestParam(value = "page", defaultValue = "1") int page) {
@@ -94,7 +89,7 @@ public class MainController {
         return "productList";
     }
 
-    @RequestMapping({ "/buyProduct" })
+    @RequestMapping({"/buyProduct"})
     public String listProductHandler(HttpServletRequest request, Model model, //
                                      @RequestParam(value = "code", defaultValue = "") String code) {
 
@@ -104,18 +99,17 @@ public class MainController {
         }
         if (product != null) {
 
-            // Cart info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
 
             ProductInfo productInfo = new ProductInfo(product);
 
             cartInfo.addProduct(productInfo, 1);
         }
-        // Redirect to shoppingCart page.
+
         return "redirect:/shoppingCart";
     }
 
-    @RequestMapping({ "/shoppingCartRemoveProduct" })
+    @RequestMapping({"/shoppingCartRemoveProduct"})
     public String removeProductHandler(HttpServletRequest request, Model model, //
                                        @RequestParam(value = "code", defaultValue = "") String code) {
         Product product = null;
@@ -124,7 +118,6 @@ public class MainController {
         }
         if (product != null) {
 
-            // Cart Info stored in Session.
             CartInfo cartInfo = Utils.getCartInSession(request);
 
             ProductInfo productInfo = new ProductInfo(product);
@@ -132,12 +125,10 @@ public class MainController {
             cartInfo.removeProduct(productInfo);
 
         }
-        // Redirect to shoppingCart page.
         return "redirect:/shoppingCart";
     }
 
-    // POST: Update quantity of products in cart.
-    @RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/shoppingCart"}, method = RequestMethod.POST)
     public String shoppingCartUpdateQty(HttpServletRequest request, //
                                         Model model, //
                                         @ModelAttribute("cartForm") CartInfo cartForm) {
@@ -145,12 +136,10 @@ public class MainController {
         CartInfo cartInfo = Utils.getCartInSession(request);
         cartInfo.updateQuantity(cartForm);
 
-        // Redirect to shoppingCart page.
         return "redirect:/shoppingCart";
     }
 
-    // GET: Show Cart
-    @RequestMapping(value = { "/shoppingCart" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/shoppingCart"}, method = RequestMethod.GET)
     public String shoppingCartHandler(HttpServletRequest request, Model model) {
         CartInfo myCart = Utils.getCartInSession(request);
 
@@ -158,16 +147,13 @@ public class MainController {
         return "shoppingCart";
     }
 
-    // GET: Enter customer information.
-    @RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/shoppingCartCustomer"}, method = RequestMethod.GET)
     public String shoppingCartCustomerForm(HttpServletRequest request, Model model) {
 
         CartInfo cartInfo = Utils.getCartInSession(request);
 
-        // Cart is empty.
-        if (cartInfo.isEmpty()) {
 
-            // Redirect to shoppingCart page.
+        if (cartInfo.isEmpty()) {
             return "redirect:/shoppingCart";
         }
 
@@ -181,8 +167,7 @@ public class MainController {
         return "shoppingCartCustomer";
     }
 
-    // POST: Save customer information.
-    @RequestMapping(value = { "/shoppingCartCustomer" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/shoppingCartCustomer"}, method = RequestMethod.POST)
     public String shoppingCartCustomerSave(HttpServletRequest request, //
                                            Model model, //
                                            @ModelAttribute("customerForm") @Validated CustomerInfo customerForm, //
@@ -201,21 +186,18 @@ public class MainController {
 
         cartInfo.setCustomerInfo(customerForm);
 
-        // Redirect to Confirmation page.
         return "redirect:/shoppingCartConfirmation";
     }
 
-    // GET: Review Cart to confirm.
-    @RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/shoppingCartConfirmation"}, method = RequestMethod.GET)
     public String shoppingCartConfirmationReview(HttpServletRequest request, Model model) {
         CartInfo cartInfo = Utils.getCartInSession(request);
 
-        // Cart have no products.
+
         if (cartInfo.isEmpty()) {
-            // Redirect to shoppingCart page.
             return "redirect:/shoppingCart";
         } else if (!cartInfo.isValidCustomer()) {
-            // Enter customer info.
             return "redirect:/shoppingCartCustomer";
         }
 
@@ -223,18 +205,16 @@ public class MainController {
     }
 
     // POST: Send Cart (Save).
-    @RequestMapping(value = { "/shoppingCartConfirmation" }, method = RequestMethod.POST)
+    @RequestMapping(value = {"/shoppingCartConfirmation"}, method = RequestMethod.POST)
     // Avoid UnexpectedRollbackException (See more explanations)
     @Transactional(propagation = Propagation.NEVER)
     public String shoppingCartConfirmationSave(HttpServletRequest request, Model model) {
         CartInfo cartInfo = Utils.getCartInSession(request);
 
-        // Cart have no products.
+
         if (cartInfo.isEmpty()) {
-            // Redirect to shoppingCart page.
             return "redirect:/shoppingCart";
         } else if (!cartInfo.isValidCustomer()) {
-            // Enter customer info.
             return "redirect:/shoppingCartCustomer";
         }
         try {
@@ -243,17 +223,15 @@ public class MainController {
             // Need: Propagation.NEVER?
             return "shoppingCartConfirmation";
         }
-        // Remove Cart In Session.
+
         Utils.removeCartInSession(request);
 
-        // Store Last ordered cart to Session.
         Utils.storeLastOrderedCartInSession(request, cartInfo);
 
-        // Redirect to successful page.
         return "redirect:/shoppingCartFinalize";
     }
 
-    @RequestMapping(value = { "/shoppingCartFinalize" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/shoppingCartFinalize"}, method = RequestMethod.GET)
     public String shoppingCartFinalize(HttpServletRequest request, Model model) {
 
         CartInfo lastOrderedCart = Utils.getLastOrderedCartInSession(request);
@@ -265,7 +243,7 @@ public class MainController {
         return "shoppingCartFinalize";
     }
 
-    @RequestMapping(value = { "/productImage" }, method = RequestMethod.GET)
+    @RequestMapping(value = {"/productImage"}, method = RequestMethod.GET)
     public void productImage(HttpServletRequest request, HttpServletResponse response, Model model,
                              @RequestParam("code") String code) throws IOException {
         Product product = null;

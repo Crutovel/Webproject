@@ -15,7 +15,6 @@ public class OrderDetailInfo {
     }
 
     // Using for Hibernate Query.
-    // Sử dụng cho Hibernate Query.
     public OrderDetailInfo(String id, String productCode, //
                            String productName, int quanity, double price, double amount) {
         this.id = id;

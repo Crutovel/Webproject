@@ -12,11 +12,8 @@ public class Utils {
         // Get Cart from Session.
         CartInfo cartInfo = (CartInfo) request.getSession().getAttribute("myCart");
 
-        // If null, create it.
         if (cartInfo == null) {
             cartInfo = new CartInfo();
-
-            // And store to Session.
             request.getSession().setAttribute("myCart", cartInfo);
         }
 
