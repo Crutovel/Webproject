@@ -3,9 +3,9 @@ package com.softserve.edu.webproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.hibernate.ScrollMode;
 import org.hibernate.ScrollableResults;
+import org.hibernate.query.Query;
 
 public class PaginationResult<E> {
 

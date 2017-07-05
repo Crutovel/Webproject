@@ -1,17 +1,17 @@
 package com.softserve.edu.webproject.entity;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+@NamedQuery(name = Account.QUERY_FIND_BY_USER_NAME,
+        query = "select a from Account a where a.userName = :" + Account.PARAM_USER_NAME)
 @Entity
-@Table(name = "Accounts")
+@Table(name = "accounts")
 public class Account implements Serializable {
-
     private static final long serialVersionUID = -2054386655979281969L;
+    public static final String QUERY_FIND_BY_USER_NAME = "Account.findByUserName";
+    public static final String PARAM_USER_NAME = "userName";
 
     public static final String ROLE_MANAGER = "MANAGER";
     public static final String ROLE_EMPLOYEE = "EMPLOYEE";
@@ -22,7 +22,7 @@ public class Account implements Serializable {
     private String userRole;
 
     @Id
-    @Column(name = "User_Name", length = 20, nullable = false)
+    @Column(name = "user_name", length = 20, nullable = false)
     public String getUserName() {
         return userName;
     }
@@ -31,7 +31,7 @@ public class Account implements Serializable {
         this.userName = userName;
     }
 
-    @Column(name = "Password", length = 20, nullable = false)
+    @Column(name = "password", length = 20, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -40,7 +40,7 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-    @Column(name = "Active", length = 1, nullable = false)
+    @Column(name = "active", length = 1, nullable = false)
     public boolean isActive() {
         return active;
     }

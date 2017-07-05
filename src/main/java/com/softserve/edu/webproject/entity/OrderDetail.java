@@ -2,31 +2,29 @@ package com.softserve.edu.webproject.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@NamedQuery(name = "Order.listOrderDetailInfos",
+        query = "Select new com.softserve.edu.webproject.model.OrderDetailInfo"
+                + "(d.id, d.product.code, d.product.name , d.quanity,d.price,d.amount) "
+                + " from OrderDetail  d  where d.order.id = :" + OrderDetail.PARAM_ORDER_ID)
 @Entity
-@Table(name = "Order_Details")
+@Table(name = "order_details")
 public class OrderDetail implements Serializable {
 
     private static final long serialVersionUID = 7550745928843183535L;
+    public static final String QUERY_GET_LIST = "Order.listOrderDetailInfos";
+    public static final String PARAM_ORDER_ID = "orderId";
 
     private String id;
     private Order order;
-
     private Product product;
     private int quanity;
     private double price;
     private double amount;
 
     @Id
-    @Column(name = "ID", length = 50, nullable = false)
+    @Column(name = "id", length = 50, nullable = false)
     public String getId() {
         return id;
     }
@@ -36,8 +34,8 @@ public class OrderDetail implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ORDER_ID", nullable = false, //
-            foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
+    @JoinColumn(name = "order_id", nullable = false,
+            foreignKey = @ForeignKey(name = "order_detail_ord_fk"))
     public Order getOrder() {
         return order;
     }
@@ -47,8 +45,8 @@ public class OrderDetail implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false, //
-            foreignKey = @ForeignKey(name = "ORDER_DETAIL_PROD_FK"))
+    @JoinColumn(name = "product_id", nullable = false,
+            foreignKey = @ForeignKey(name = "order_detail_prod_fk"))
     public Product getProduct() {
         return product;
     }
@@ -57,7 +55,7 @@ public class OrderDetail implements Serializable {
         this.product = product;
     }
 
-    @Column(name = "Quanity", nullable = false)
+    @Column(name = "quanity", nullable = false)
     public int getQuanity() {
         return quanity;
     }
@@ -66,7 +64,7 @@ public class OrderDetail implements Serializable {
         this.quanity = quanity;
     }
 
-    @Column(name = "Price", nullable = false)
+    @Column(name = "price", nullable = false)
     public double getPrice() {
         return price;
     }
@@ -75,7 +73,7 @@ public class OrderDetail implements Serializable {
         this.price = price;
     }
 
-    @Column(name = "Amount", nullable = false)
+    @Column(name = "amount", nullable = false)
     public double getAmount() {
         return amount;
     }

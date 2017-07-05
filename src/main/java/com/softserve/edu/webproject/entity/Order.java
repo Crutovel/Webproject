@@ -3,17 +3,26 @@ package com.softserve.edu.webproject.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
+
+@NamedQueries({
+        @NamedQuery(
+                name = Order.QUERY_GET_MAX_ORDER_NUM,
+                query = "Select max(o.orderNum) from Order o"
+        ),
+        @NamedQuery(name = Order.QUERY_GET_ORDERS,
+                query = "Select new com.softserve.edu.webproject.model.OrderInfo"
+                        + "(ord.id, ord.orderDate, ord.orderNum, ord.amount, "
+                        + " ord.customerName, ord.customerAddress, ord.customerEmail, ord.customerPhone) "
+                        + " from Order ord order by ord.orderNum desc")
+})
 
 @Entity
-@Table(name = "Orders", //
-        uniqueConstraints = {@UniqueConstraint(columnNames = "Order_Num")})
+@Table(name = "orders",
+        uniqueConstraints = {@UniqueConstraint(columnNames = "order_num")})
 public class Order implements Serializable {
-
+    public static final String QUERY_GET_MAX_ORDER_NUM = "Order.getMaxOrderNum";
+    public static final String QUERY_GET_ORDERS = "Order.getOrderInfoList";
     private static final long serialVersionUID = -2576670215015463100L;
 
     private String id;
@@ -27,7 +36,7 @@ public class Order implements Serializable {
     private String customerPhone;
 
     @Id
-    @Column(name = "ID", length = 50)
+    @Column(name = "id", length = 50)
     public String getId() {
         return id;
     }
@@ -36,7 +45,7 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    @Column(name = "Order_Date", nullable = false)
+    @Column(name = "order_date", nullable = false)
     public Date getOrderDate() {
         return orderDate;
     }
@@ -45,7 +54,7 @@ public class Order implements Serializable {
         this.orderDate = orderDate;
     }
 
-    @Column(name = "Order_Num", nullable = false)
+    @Column(name = "order_num", nullable = false)
     public int getOrderNum() {
         return orderNum;
     }
@@ -54,7 +63,7 @@ public class Order implements Serializable {
         this.orderNum = orderNum;
     }
 
-    @Column(name = "Amount", nullable = false)
+    @Column(name = "amount", nullable = false)
     public double getAmount() {
         return amount;
     }
@@ -63,7 +72,7 @@ public class Order implements Serializable {
         this.amount = amount;
     }
 
-    @Column(name = "Customer_Name", length = 255, nullable = false)
+    @Column(name = "customer_name", length = 255, nullable = false)
     public String getCustomerName() {
         return customerName;
     }
@@ -72,7 +81,7 @@ public class Order implements Serializable {
         this.customerName = customerName;
     }
 
-    @Column(name = "Customer_Address", length = 255, nullable = false)
+    @Column(name = "customer_address", length = 255, nullable = false)
     public String getCustomerAddress() {
         return customerAddress;
     }
@@ -81,7 +90,7 @@ public class Order implements Serializable {
         this.customerAddress = customerAddress;
     }
 
-    @Column(name = "Customer_Email", length = 128, nullable = false)
+    @Column(name = "customer_email", length = 128, nullable = false)
     public String getCustomerEmail() {
         return customerEmail;
     }
@@ -90,7 +99,7 @@ public class Order implements Serializable {
         this.customerEmail = customerEmail;
     }
 
-    @Column(name = "Customer_Phone", length = 128, nullable = false)
+    @Column(name = "customer_phone", length = 128, nullable = false)
     public String getCustomerPhone() {
         return customerPhone;
     }

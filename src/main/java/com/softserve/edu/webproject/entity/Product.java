@@ -3,16 +3,10 @@ package com.softserve.edu.webproject.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "Products")
+@Table(name = "products")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = -1000119078147252957L;
@@ -25,11 +19,8 @@ public class Product implements Serializable {
     // For sort.
     private Date createDate;
 
-    public Product() {
-    }
-
     @Id
-    @Column(name = "Code", length = 20, nullable = false)
+    @Column(name = "code", length = 20, nullable = false)
     public String getCode() {
         return code;
     }
@@ -38,7 +29,7 @@ public class Product implements Serializable {
         this.code = code;
     }
 
-    @Column(name = "Name", length = 255, nullable = false)
+    @Column(name = "name", length = 255, nullable = false)
     public String getName() {
         return name;
     }
@@ -47,7 +38,7 @@ public class Product implements Serializable {
         this.name = name;
     }
 
-    @Column(name = "Price", nullable = false)
+    @Column(name = "price", nullable = false)
     public double getPrice() {
         return price;
     }
@@ -57,7 +48,7 @@ public class Product implements Serializable {
     }
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "Create_Date", nullable = false)
+    @Column(name = "create_date", nullable = false)
     public Date getCreateDate() {
         return createDate;
     }
@@ -67,7 +58,7 @@ public class Product implements Serializable {
     }
 
     @Lob
-    @Column(name = "Image", length = Integer.MAX_VALUE, nullable = true)
+    @Column(name = "image", length = Integer.MAX_VALUE)
     public byte[] getImage() {
         return image;
     }

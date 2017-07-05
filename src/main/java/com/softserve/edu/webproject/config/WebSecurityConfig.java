@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-// @EnableWebSecurity = @EnableWebMVCSecurity + Extra features
 @ComponentScan( basePackages = "com.softserve.edu.webproject.authentication" )
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,22 +29,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.csrf().disable();
-
         // The pages requires login as EMPLOYEE or MANAGER.
         // If no login, it will redirect to /login page.
         http.authorizeRequests().antMatchers("/orderList", "/order", "/accountInfo")
                 .access("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_MANAGER')");
-
         // For MANAGER only.
         http.authorizeRequests().antMatchers("/product").access("hasRole('ROLE_MANAGER')");
-
         // When the user has logged in as XX.
         // But access a page that requires role YY,
         // AccessDeniedException will throw.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
         // Config for Login Form
         http.authorizeRequests().and().formLogin()
                 // Submit URL of login page.

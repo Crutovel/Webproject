@@ -13,24 +13,19 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 public class SpringWebAppInitializer implements WebApplicationInitializer {
 
+    private static final String ENCODING = "UTF-8";
 
     public void onStartup(ServletContext servletContext) throws ServletException {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(ApplicationContextConfig.class);
-
+        appContext.register(WebMvcConfig.class);
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("SpringDispatcher",
                 new DispatcherServlet(appContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-
         ContextLoaderListener contextLoaderListener = new ContextLoaderListener(appContext);
-
         servletContext.addListener(contextLoaderListener);
-
-        // Filter.
         FilterRegistration.Dynamic fr = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
-
-        fr.setInitParameter("encoding", "UTF-8");
+        fr.setInitParameter("encoding", ENCODING);
         fr.setInitParameter("forceEncoding", "true");
         fr.addMappingForUrlPatterns(null, true, "/*");
     }

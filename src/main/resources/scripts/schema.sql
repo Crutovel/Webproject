@@ -1,51 +1,53 @@
-create table Accounts (
-  User_Name varchar(20) not null,
-  Active bit not null,
-  Password varchar(20) not null,
-  User_Role varchar(20) not null,
-  primary key (User_Name)
+
+DROP TABLE IF EXISTS accounts;
+CREATE TABLE accounts (
+  user_name VARCHAR(20) NOT NULL,
+  active    BIT         NOT NULL,
+  password  VARCHAR(20) NOT NULL,
+  user_role VARCHAR(20) NOT NULL,
+  PRIMARY KEY (user_name)
+);
+DROP TABLE IF EXISTS order_details;
+CREATE TABLE order_details (
+  id         VARCHAR(50)      NOT NULL,
+  amount     DOUBLE PRECISION NOT NULL,
+  price      DOUBLE PRECISION NOT NULL,
+  quanity    INTEGER          NOT NULL,
+  order_id   VARCHAR(50)      NOT NULL,
+  product_id VARCHAR(20)      NOT NULL,
+  PRIMARY KEY (id)
+);
+DROP TABLE IF EXISTS orders;
+CREATE TABLE orders (
+  id               VARCHAR(50)      NOT NULL,
+  amount           DOUBLE PRECISION NOT NULL,
+  customer_address VARCHAR(255)     NOT NULL,
+  customer_email   VARCHAR(128)     NOT NULL,
+  customer_name    VARCHAR(255)     NOT NULL,
+  customer_phone   VARCHAR(128)     NOT NULL,
+  order_date       DATETIME         NOT NULL,
+  order_num        INTEGER          NOT NULL,
+  PRIMARY KEY (id)
+);
+DROP TABLE IF EXISTS products;
+CREATE TABLE products (
+  code        VARCHAR(20)      NOT NULL,
+  create_date DATETIME         NOT NULL,
+  image       LONGBLOB,
+  name        VARCHAR(255)     NOT NULL,
+  price       DOUBLE PRECISION NOT NULL,
+  PRIMARY KEY (code)
 );
 
-create table Order_Details (
-  ID varchar(50) not null,
-  Amount double precision not null,
-  Price double precision not null,
-  Quanity integer not null,
-  ORDER_ID varchar(50) not null,
-  PRODUCT_ID varchar(20) not null,
-  primary key (ID)
-);
+ALTER TABLE orders
+  ADD UNIQUE (order_num);
 
-create table Orders (
-  ID varchar(50) not null,
-  Amount double precision not null,
-  Customer_Address varchar(255) not null,
-  Customer_Email varchar(128) not null,
-  Customer_Name varchar(255) not null,
-  Customer_Phone varchar(128) not null,
-  Order_Date datetime not null,
-  Order_Num integer not null,
-  primary key (ID)
-);
+ALTER TABLE order_details
+  ADD CONSTRAINT order_detail_ord_fk
+FOREIGN KEY (order_id)
+REFERENCES orders (id);
 
-create table Products (
-  Code varchar(20) not null,
-  Create_Date datetime not null,
-  Image longblob,
-  Name varchar(255) not null,
-  Price double precision not null,
-  primary key (Code)
-);
-
-alter table Orders
-  add constraint UK_sxhpvsj665kmi4f7jdu9d2791  unique (Order_Num);
-
-alter table Order_Details
-  add constraint ORDER_DETAIL_ORD_FK
-foreign key (ORDER_ID)
-references Orders (ID);
-
-alter table Order_Details
-  add constraint ORDER_DETAIL_PROD_FK
-foreign key (PRODUCT_ID)
-references Products (Code);
+ALTER TABLE order_details
+  ADD CONSTRAINT order_detail_prod_fk
+FOREIGN KEY (product_id)
+REFERENCES products (code);

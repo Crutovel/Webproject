@@ -10,15 +10,14 @@
 </head>
 <body>
 
-
 <jsp:include page="_header.jsp" />
 <jsp:include page="_menu.jsp" />
 
 <div class="page-title">Vaccamoo - Home</div>
 
 <div class="demo-container">
-    Importance of Vaccines.
-    Top 10 Reasons to Protect Children Through Vaccination
+    <b>Importance of Vaccines.
+    Top 10 Reasons to Protect Children Through Vaccination</b>
     <ul>
     <li> *
     Parents want to do everything possible to make sure their children are healthy and protected
@@ -50,7 +49,7 @@
         or to people with weakened immune systems, such as transplant recipients and people with cancer.
         This could result in long-term complications and even death for these vulnerable people.</li>
     <li>  *
-    We all have a public health commitment to our communities to protect each other and each other’s
+    We all have a public health commitment to our communities to protect each other and each other's
         children by vaccinating our own family members.</li>
     </ul>
 </div>
