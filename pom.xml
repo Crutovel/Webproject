@@ -7,6 +7,11 @@
     <groupId>com.softserve.edu</groupId>
     <artifactId>vaccamoo</artifactId>
     <packaging>war</packaging>
+    <scm>
+        <connection>scm:git:git://github.com/Crutovel/Webproject</connection>
+        <developerConnection>scm:git:git://github.com/Crutovel/Webproject</developerConnection>
+        <url>scm:git:git://github.com/Crutovel/Webproject</url>
+    </scm>
     <version>1.0.0</version>
     <name>Vaccamoo</name>
     <url>http://maven.apache.org</url>
