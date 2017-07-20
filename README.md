@@ -1,4 +1,5 @@
 #Webproject
 Vaccamoo - vaccine shop
 Stuff used:
-Spring, Hibernate, MySQL.
+Spring, Hibernate, MySQL, JpaRepository+Querydsl
+
