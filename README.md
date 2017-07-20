@@ -1,8 +1,11 @@
-#Webproject
+# Webproject
 
-##Vaccamoo - vaccine shop
+## Vaccamoo - vaccine shop
 
-###Stuff used:
+### Stuff used:
 
-Spring, Hibernate, MySQL, JpaRepository+Querydsl
+* Spring 
+* Hibernate
+* MySQL
+* JpaRepository & Querydsl
 
