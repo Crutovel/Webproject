@@ -6,15 +6,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.softserve.edu</groupId>
     <artifactId>vaccamoo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <scm>
         <connection>scm:git:git://github.com/Crutovel/Webproject</connection>
         <developerConnection>scm:git:git://github.com/Crutovel/Webproject</developerConnection>
         <url>scm:git:git://github.com/Crutovel/Webproject</url>
     </scm>
-    <version>1.0.0</version>
     <name>Vaccamoo</name>
-    <url>http://maven.apache.org</url>
 
     <properties>
         <spring.version>4.3.9.RELEASE</spring.version>
